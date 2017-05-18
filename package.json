@@ -1,6 +1,14 @@
 {
   "name": "notus",
-  "main": "server.js",
+  "version": "1.5.3",
+  "description": "Taking notes, real quick.",
+  "main": "Notus.js",
+  "keywords": ["notes", "api", "notus", "express", "rethinkdb", "rethink", "mongo"],
+  "homepage": "https://notus.cf",
+  "bugs": { 
+    "url" : "https://github.com/OnlyTwentyCharacters/Notus/issues",
+    "email" : "qxest@reqxest.com"
+  },
   "dependencies": {
     "async": "^2.3.0",
     "bcrypt-nodejs": "0.0.3",
@@ -21,15 +29,24 @@
     "passport-local-mongoose": "^4.0.0",
     "rethinkdb": "^2.3.3",
     "rethinkdbdash": "^2.3.28",
+    "semistandard": "^11.0.0",
     "simplemde": "^1.11.2",
     "sync-request": "^4.0.2",
     "whatwg-fetch": "^2.0.3"
   },
-  "scripts": {
-    "start": "node Notus.js"
+  "devDependencies": {
+    "semistandard": "*"
   },
-  "version": "1.0.0",
-  "author": "",
-  "license": "ISC",
+  "semistandard": {
+  "ignore": [
+      "/views/assets/simplemde"
+    ]
+  },
+  "scripts": {
+    "start": "node Notus.js",
+    "test": "semistandard"
+  },
+  "author": "OnlyTwentyCharacters",
+  "license": "MIT",
   "description": ""
 }
