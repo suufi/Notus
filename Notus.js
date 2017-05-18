@@ -31,9 +31,9 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 // static files
-app.use('/js',  express.static(path.resolve(__dirname, '/views/assets/js')));
-app.use('/css', express.static(path.resolve(__dirname, '/views/assets/css')));
-app.use('/mde', express.static(path.resolve(__dirname, '/views/assets/simplemde/dist')));
+app.use('/js',  express.static(path.join(__dirname, '/views/assets/js')));
+app.use('/css', express.static(path.join(__dirname, '/views/assets/css')));
+app.use('/mde', express.static(path.join(__dirname, '/views/assets/simplemde/dist')));
 
 // main routes
 app.use('/notes', require('./routes/notes'));
