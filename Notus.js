@@ -2,8 +2,7 @@
 /* eslint-env node */
 
 // requires
-const {database,
-       secret} = require('./config');
+const { database, secret, port } = require('./config');
 const express = require('express');
 const app = express();
 const mongoose = require('mongoose');
@@ -40,5 +39,5 @@ app.use('/mde', express.static(path.resolve(__dirname, '/views/assets/simplemde/
 app.use('/notes', require('./routes/notes'));
 app.use('/', require('./routes/primary'));
 
-app.listen(8080);
-console.log('8080 is the magic port! I hope.');
+app.listen(port);
+console.log(`${port} is the magic port! I hope.`);
