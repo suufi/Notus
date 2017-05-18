@@ -1,10 +1,9 @@
 <h1 align="center">
-<a href="https://notus.cf">Notus</a>
-<h3>
-Taking notes reaaaal quick.
-</h3>
+<a href="#">Notus</a>
 <br>
 </h1>
+
+<hr>
 
 <p align="center">
   <a href="#"><img src="https://img.shields.io/badge/version-1.2.1-blue.svg?style=flat-square" alt="version"></a>
