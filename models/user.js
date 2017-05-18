@@ -3,6 +3,9 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 const passportLocalMongoose = require('passport-local-mongoose');
 
+// no more warnings :)
+mongoose.Promise = global.Promise;
+
 // set up a mongoose model and pass it using module.exports
 const userSchema = new Schema({
   email: String,

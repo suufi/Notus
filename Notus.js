@@ -16,7 +16,6 @@ mongoose.connect(database);
 
 // middleware
 app.use(require('body-parser').json());
-app.use(require('body-parser')());
 app.use(require('body-parser').urlencoded({ extended: true }));
 app.use(require('morgan')('dev'));
 app.set('view engine', 'ejs');
@@ -28,12 +27,12 @@ passport.deserializeUser(User.deserializeUser());
 
 // settings
 app.set('superSecret', secret);
-app.use(require('express-session')({ secret: secret }));
+app.use(require('express-session')({ secret: secret, resave: true, saveUninitialized: true }));
 app.use(passport.initialize());
 app.use(passport.session());
 
 // static files
-app.use('/js', express.static(path.resolve(__dirname, '/views/assets/js')));
+app.use('/js',  express.static(path.resolve(__dirname, '/views/assets/js')));
 app.use('/css', express.static(path.resolve(__dirname, '/views/assets/css')));
 app.use('/mde', express.static(path.resolve(__dirname, '/views/assets/simplemde/dist')));
 

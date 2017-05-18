@@ -1,6 +1,6 @@
 {
   "name": "notus",
-  "version": "1.5.3",
+  "version": "1.5.4",
   "description": "Taking notes, real quick.",
   "main": "Notus.js",
   "keywords": ["notes", "api", "notus", "express", "rethinkdb", "rethink", "mongo"],
