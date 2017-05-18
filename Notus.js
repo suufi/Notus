@@ -1,14 +1,15 @@
-/*eslint no-undef: "error"*/
-/*eslint-env node*/
+/* eslint no-undef: "error" */
+/* eslint-env node */
 
 // requires
-const {database, 
-       secret}      = require('./config');
-const express       = require('express');
-const app           = express();
-const mongoose      = require('mongoose');
-const User          = require('./models/user');
-const passport      = require('passport');
+const {database,
+       secret} = require('./config');
+const express = require('express');
+const app = express();
+const mongoose = require('mongoose');
+const User = require('./models/user');
+const passport = require('passport');
+const path = require('path');
 
 // mongodb database connection
 mongoose.connect(database);
@@ -32,9 +33,9 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 // static files
-app.use('/js', express.static(__dirname + '/views/assets/js'));
-app.use('/css', express.static(__dirname + '/views/assets/css'));
-app.use('/mde', express.static(__dirname + '/views/assets/simplemde/dist'));
+app.use('/js', express.static(path.resolve(__dirname, '/views/assets/js')));
+app.use('/css', express.static(path.resolve(__dirname, '/views/assets/css')));
+app.use('/mde', express.static(path.resolve(__dirname, '/views/assets/simplemde/dist')));
 
 // main routes
 app.use('/notes', require('./routes/notes'));
