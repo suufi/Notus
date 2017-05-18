@@ -1,0 +1,158 @@
+@import url(https://fonts.googleapis.com/css?family=Lato:300,500,700,900);
+
+* {
+    margin: 0;
+    padding: 0;
+}
+
+.main-text {
+    color: #ffa900 !important;
+}
+
+.hidden {
+  display: none;
+}
+
+#potd {
+    height: 100%;
+    width: 100%;
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    left: 0;
+    z-index: -10;
+}
+#overlay {
+    width: 100%;
+    height: 100%;
+}
+
+html, body {
+    align-items: center;
+    height: 100%;
+    font-family: 'Lato', Helvetica, sans-serif !important;
+    font-weight: 500;
+    justify-content: center;
+    text-align: center;
+    color: #555459;
+    overflow: hidden;
+}
+
+#footer-container {
+    width: 100%;
+    height: 3rem;
+    background-color: #193649;
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    left: 0;
+    text-align: left;
+    font-size: 0;
+}
+#footer-container button {
+    height: 3rem;
+    width: 3rem;
+    transition: 300ms;
+    color: white;
+    border: 0;
+    font-size: 1.5rem;
+    font-weight: 300;
+    line-height: 1.5rem;
+    background-color: transparent;
+    border-right: 2px solid rgba(0, 0, 0, 0.2);
+}
+#logout {
+  float: right;
+}
+#add-note:hover {
+    background-color: #ffa900;
+}
+#edit-note:hover {
+  background-color: crimson;
+}
+#delete-note:hover, #logout:hover {
+  background-color: red; 
+}
+#user-avatar {
+  margin-top: -.25rem;
+  height: 2rem;
+  width: 2rem;
+  border-radius: .5rem;
+}
+#user-info {
+    float: right;
+    height: 3rem;
+    min-width: 4rem;
+    max-width: 8rem;
+    padding: 0.9rem;
+    color: white;
+    font-size: 1.1rem;
+    line-height: 1.1rem;
+    text-align: right;
+}
+
+main {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+}
+
+#notes {
+    overflow: auto;
+    height: 80%;
+    margin-top: 3px;
+}
+#selected-note {
+  background-color: #ffa900 !important;
+}
+.note-main {
+    width: 90%;
+    height: 8%;
+    background-color: rgba(20, 20, 20, 0.5);
+    color: white;
+    padding: 5%;
+    text-align: left;
+}
+.note-item {
+    width: 90%;
+    height: 40px;
+    background-color: rgba(30, 30, 30, 0.5);
+    color: white;
+    padding: 5%;
+    text-align: left;
+    border-bottom: 1px solid rgba(0,0,0,0.1);
+}
+.note-item p {
+    font-size: 12px;
+}
+
+#main-container {
+    height: 100%;
+}
+#sidebar {
+    display: inline-block;
+    width: 20%;
+    height: 100%;
+    background-color: rgba(50, 50, 50, 0.7);
+    float: left;
+}
+
+#editor {
+    display: inline-block;
+    width: 80%;
+    height: 100%;
+    background-color: rgba(50, 50, 50, 0.9);
+}
+
+a {
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+.note-button:hover {
+  text-decoration: none;
+}

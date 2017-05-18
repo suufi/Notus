@@ -1,0 +1,21 @@
+<!-- views/partials/sidebar.ejs -->
+            <div class="note-main">
+                <h3> Notes </h3>
+                <p> <%= notes.length %>/50 notes </p>
+            </div>
+            <div id="notes">
+              <% if (notes.length > 0) { %>
+              <% notes.forEach(function(note) { %>
+                <a href="#" class="note-button" data-id="<%- note.id %>">
+                  <div class="note-item">
+                    <h3><%=note.title%></h3>
+                    <p><%=note.description.slice(0, 40)%></p>
+                  </div>
+                </a>   
+              <% }); %>
+              <% } else { %>
+                  <p>
+                      Looks like you don't have any notes. Try making some.
+                  </p>
+              <% } %>
+            </div>

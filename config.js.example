@@ -1,0 +1,29 @@
+/*eslint no-undef: "error"*/
+/*eslint-env node*/
+
+module.exports = {
+
+	'domains': {
+		base: 'notus.cf',
+		mail: 'mail.notus.cf',
+		website: 'https://notus.cf'
+	},
+	'secret': 'cleancut',
+	'database': 'mongodb connection url',
+	'rethinkdb': {
+		db: 'Notus',
+		servers: [{
+			host: 'xxx',
+			port: 28015
+		}]
+	},
+	'baseURL': 'https://notus.cf',
+	'noteLimit': 50,
+	'mailService': {
+		service: 'Mailgun',
+		auth: {
+			user: 'postmaster@mail.domain.com',
+			pass: 'xxx'
+		}
+	}
+};

@@ -1,0 +1,41 @@
+<!-- views/pages/login.ejs -->
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <% include ../partials/head %>
+  <link rel="stylesheet" href="/css/login.css">
+</head>
+
+<body>
+    <img id="potd" src="<%= potd.hdurl %>" alt="Picture of the day">
+    <div id="overlay">
+      <div id="login-container">
+    <h1><b>Sign in to <span class="main-text">Notus</span></b></h1>
+    <h4> Enter your <b> username </b> and <b> password</b> below.</h4>
+
+
+
+    <br/>
+        <div id="error-container" class="hidden">
+          <span></span>
+        </div>
+        <br/>
+
+        <form id="login-form" method="post">
+      <input type="text" name="username" id="username-textbox" placeholder="username">
+      <br/>
+      <input type="password" name="password" id="password-textbox" placeholder="password">
+      <br/>
+      <input type="submit" name="action" id="login" value="Sign in">
+    </form>
+        <br/>
+        <p>Don't have an account? <a href="/register">Register here</a> </p>
+  </div>
+    </div>
+
+    <script src="/js/init.js"></script>
+</body>
+
+</html>
