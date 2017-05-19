@@ -14,8 +14,7 @@
 }
 
 #potd {
-    height: 100%;
-    width: 100%;
+    background-size: cover;
     position: fixed;
     top: 0;
     bottom: 0;
@@ -41,7 +40,7 @@ html, body {
 }
 
 #login-container {
-    width: 50%;
+    /* width: 50%; */
     height: auto;
     padding: 3rem 4.5rem 3rem 3rem;
     background-color: #fdfdfd;
@@ -49,6 +48,9 @@ html, body {
     border-radius: .2rem;
     margin-left: auto !important;
     margin-right: auto !important;
+    position: fixed;
+    left: 25%;
+    right: 25%;
 }
 
 #login-container h4 {
@@ -92,6 +94,9 @@ input[type='submit'] {
     font-weight: 900;
     text-shadow: 0 2px 1px rgba(0, 0, 0, .1);
     cursor: pointer;
+    width: 90%;
+    /* position: absolute; */
+    margin-left: 5%;
 }
 
 input[type='submit']:hover:after {
@@ -112,5 +117,3 @@ a:hover {
     color: #ffa900;
     font-weight: 900;
 }
-
-.grid-50 {}

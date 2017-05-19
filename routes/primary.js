@@ -48,7 +48,7 @@ router.post('/register', function (req, res) {
 router.get('/login', function (req, res) {
   request('https://api.nasa.gov/planetary/apod?api_key=' + dataGovKey + '&hd=true', function (err, body) {
     if (err) throw err;
-    res.render('pages/test', {
+    res.render('pages/login', {
       page: {
         title: 'Login',
         description: 'Login page @ Notus',
