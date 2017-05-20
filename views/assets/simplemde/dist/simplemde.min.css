@@ -343,7 +343,7 @@ div.CodeMirror-cursors {
 }.cm-tab-wrap-hack:after {
     content: ''}
 span.CodeMirror-selectedtext {
-    background: 0 0;
+    background: #d55 !important;
 }
 .CodeMirror {
     height: 30rem;
@@ -575,9 +575,9 @@ span.CodeMirror-selectedtext {
     font-size: 110%;
     line-height: 110%}
 .CodeMirror .CodeMirror-code .cm-comment {
-    background: #545454;
+    background: #87adbd;
     border-radius: 2px;
-    padding: 0 5px;
+    color: black;
 }
 .CodeMirror .CodeMirror-code .cm-link {
     color: #687071;
