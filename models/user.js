@@ -9,8 +9,8 @@ mongoose.Promise = global.Promise;
 // set up a mongoose model and pass it using module.exports
 const userSchema = new Schema({
   email: String,
-  admin: Boolean,
   verified: Boolean,
+  verificationToken: String,
   resetPasswordToken: String,
   resetPasswordExpires: Date
 });
