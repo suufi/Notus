@@ -1,7 +1,7 @@
 /* eslint no-undef: "error" */
 /* eslint-env node */
 
-const { rethinkdb, baseURL, mailService, domains, dataGovKey } = require('./../config');
+const { rethinkdb, mailService, domains, dataGovKey } = require('./../config');
 const r = require('rethinkdbdash')(rethinkdb);
 const User = require('./../models/user');
 const passport = require('passport');
@@ -22,7 +22,7 @@ router.get('/register', function (req, res) {
       page: {
         title: 'Register',
         description: 'Registration page @ Notus',
-        url: baseURL + '/register'
+        url: domains.base + '/register'
       },
       potd: JSON.parse(body.body)
     });
@@ -52,7 +52,7 @@ router.get('/login', function (req, res) {
       page: {
         title: 'Login',
         description: 'Login page @ Notus',
-        url: baseURL + '/login'
+        url: domains.base + '/login'
       },
       potd: JSON.parse(body.body)
     });

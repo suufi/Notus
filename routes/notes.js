@@ -1,4 +1,4 @@
-const {rethinkdb, baseURL, dataGovKey} = require('./../config');
+const {rethinkdb, domains, dataGovKey} = require('./../config');
 const r = require('rethinkdbdash')(rethinkdb);
 const router = require('express').Router();
 const request = require('request');
@@ -14,7 +14,7 @@ router.get('/', loggedIn, (req, res) => {
         page: {
           title: 'Notes',
           description: 'Notes page @ Notus',
-          url: baseURL + '/notes'
+          url: domains.base + '/notes'
         },
         potd: JSON.parse(body.body),
         user: req.user,
