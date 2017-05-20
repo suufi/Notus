@@ -1,11 +1,11 @@
 module.exports = {
-
 	'domains': {
 		base: 'notus.cf',
 		mail: 'mail.notus.cf',
 		website: 'https://notus.cf'
 	},
 	'port': 8080,
+	'dataGovKey': '71istdNK7Ybf0MP37X4agCdaD6q3T5fwjexkht0S',
 	'secret': 'cleancut',
   'database': 'mongodb://username:password@domain/database',
 	'rethinkdb': {
@@ -15,7 +15,6 @@ module.exports = {
 			port: 28015
 		}]
 	},
-	'baseURL': 'https://notus.cf',
 	'noteLimit': 50,
 	'mailService': {
 		service: 'Mailgun',
