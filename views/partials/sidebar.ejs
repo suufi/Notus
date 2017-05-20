@@ -1,7 +1,7 @@
 <!-- views/partials/sidebar.ejs -->
             <div class="note-main">
                 <h3> Notes </h3>
-                <p> <%= notes.length %>/50 notes </p>
+                <p> <%= notes.length %> notes </p>
             </div>
             <div id="notes">
               <% if (notes.length > 0) { %>
@@ -15,7 +15,7 @@
               <% }); %>
               <% } else { %>
                   <p>
-                      Looks like you don't have any notes. Try making some.
+                      Looks like you don't have any notes. Try taking some!
                   </p>
               <% } %>
             </div>
