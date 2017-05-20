@@ -215,10 +215,7 @@ const jQuery = window.jQuery;
             imageUrl: 'https://avatars.io/gravatar/' + user.email,
             imageWidth: 200,
             imageHeight: 200,
-            html: `Username: ${user.username} <br> Email: ${user.email}`,
-            showCloseButton: true,
-            showCancelButton: true,
-            cancelButtonText: 'Close'
+            html: `Username: ${user.username} <br> Email: ${user.email}`
           });
         });
       });
