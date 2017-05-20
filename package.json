@@ -1,7 +1,7 @@
 {
   "name": "not.us",
   "version": "1.6.0",
-  "description": "<h1 align=\"center\">Notus</h1>",
+  "description": "Take notes, real quick.",
   "main": "Notus.js",
   "keywords": [
     "notes",
@@ -29,7 +29,6 @@
     "jsonwebtoken": "^7.4.0",
     "mongoose": "^4.9.9",
     "morgan": "^1.8.1",
-    "node-slack": "0.0.7",
     "nodemailer": "^4.0.1",
     "passport": "^0.3.2",
     "passport-http": "^0.3.0",
