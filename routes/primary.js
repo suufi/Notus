@@ -1,4 +1,4 @@
-const { rethinkdb, mailService, domains, dataGovKey, noteLimit } = require('./../config');
+const { rethinkdb, mailService, domains, dataGovKey } = require('./../config');
 const r = require('rethinkdbdash')(rethinkdb);
 const User = require('./../models/user');
 const passport = require('passport');
@@ -40,54 +40,52 @@ router.post('/register', function (req, res, next) {
     });
   }
 
-    async.waterfall([
-      function (done) {
-        crypto.randomBytes(20, function (err, buf) {
-          if (err) throw err;
-          var token = buf.toString('hex');
-          done(err, token);
-        });
-      },
-      function (token, user) {
-        let transporter = nodemailer.createTransport(mailService);
-        var mailOptions = {
-          to: req.body.email,
-          from: 'no-reply@' + domains.mail,
-          subject: '[Notus] Verification',
-          text: 'You are receiving this because you (or someone else) has used your email to register on our site.\n\n' +
+  async.waterfall([
+    function (done) {
+      crypto.randomBytes(20, function (err, buf) {
+        if (err) throw err;
+        var token = buf.toString('hex');
+        done(err, token);
+      });
+    },
+    function (token, user) {
+      let transporter = nodemailer.createTransport(mailService);
+      var mailOptions = {
+        to: req.body.email,
+        from: 'no-reply@' + domains.mail,
+        subject: '[Notus] Verification',
+        text: 'You are receiving this because you (or someone else) has used your email to register on our site.\n\n' +
             'Please click on the following link, or paste this into your browser to complete the process:\n\n' +
             'https://' + req.headers.host + '/verify/' + token + '\n\n' +
             'If you did not register on our site, you can safely ignore this message. \n'
-        };
-        transporter.sendMail(mailOptions, function (err) {
-          if (err) throw err;
-          return res.send({
-            success: true,
-            message: 'An e-mail has been sent to ' + req.body.email + ' with further instructions.'
-          });
+      };
+      transporter.sendMail(mailOptions, function (err) {
+        if (err) throw err;
+        return res.send({
+          success: true,
+          message: 'An e-mail has been sent to ' + req.body.email + ' with further instructions.'
         });
-        User.register(new User({
-          username: req.body.username,
-          email: req.body.email,
-          verificationToken: token,
-          verified: false
-        }), req.body.password, function (err) {
-          if (err) {
-            return res.send({
-              error: true,
-              message: err.message
-            });
-          }
-        });
-      }
-    ], function (err) {
-      if (err) return next(err);
-      res.send({
-        success: true
       });
-      
+      User.register(new User({
+        username: req.body.username,
+        email: req.body.email,
+        verificationToken: token,
+        verified: false
+      }), req.body.password, function (err) {
+        if (err) {
+          return res.send({
+            error: true,
+            message: err.message
+          });
+        }
+      });
+    }
+  ], function (err) {
+    if (err) return next(err);
+    res.send({
+      success: true
     });
- 
+  });
 });
 
 router.get('/login', function (req, res) {
