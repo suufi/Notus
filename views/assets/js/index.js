@@ -220,6 +220,8 @@ const jQuery = window.jQuery;
             showCancelButton: true,
             cancelButtonText: 'Close'
           });
+        }); 
+      });
       $('#logout').click(() => { window.location.href = '/login'; });
       setInterval(() => {
         var textarea = $('#editor-textarea');
