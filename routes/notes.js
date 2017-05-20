@@ -53,7 +53,7 @@ router.get('/:note', loggedIn, (req, res) => {
       }
     });
   } else {
-    res.send(405);
+    res.sendStatus(405);
   }
 });
 
@@ -62,9 +62,9 @@ router.put('/:note', loggedIn, (req, res) => {
   if (req.user) {
     r.table('notus_notes').get(req.body.note).update({
       content: req.body.content
-    }).then(res.send(200));
+    }).then(res.sendStatus(200));
   } else {
-    res.send(405);
+    res.sendStatus(405);
   }
 });
 
@@ -74,25 +74,24 @@ router.post('/:note', loggedIn, (req, res) => {
     r.table('notus_notes').get(req.params.note).update({
       title: req.body.title,
       description: req.body.description
-    }).then(() => res.send(200));
+    }).then(() => res.sendStatus(200));
   } else {
-    res.send(405);
+    res.sendStatus(405);
   }
 });
 
 // delete a single note
 router.delete('/:note', loggedIn, (req, res) => {
   if (req.user) {
-    r.table('notus_notes').get(req.params.note).delete().then(res.send(200));
+    r.table('notus_notes').get(req.params.note).delete().then(res.sendStatus(200));
   } else {
-    res.send(405);
+    res.sendStatus(405);
   }
 });
 
 function loggedIn (req, res, next) {
   if (req.user) {
     next();
-    return;
   }
   res.redirect('/login');
 }

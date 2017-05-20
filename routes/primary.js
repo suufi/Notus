@@ -239,7 +239,6 @@ router.get('/partials/sidebar', loggedIn, (req, res) => {
 function loggedIn (req, res, next) {
   if (req.user) {
     next();
-    return;
   }
   res.redirect('/login');
 }

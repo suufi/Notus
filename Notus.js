@@ -26,12 +26,12 @@ passport.deserializeUser(User.deserializeUser());
 
 // settings
 app.set('superSecret', secret);
-app.use(require('express-session')({ secret: secret, resave: true, saveUninitialized: true }));
+app.use(require('express-session')({ secret: secret, resave: false, saveUninitialized: false }));
 app.use(passport.initialize());
 app.use(passport.session());
 
 // static files
-app.use('/js',  express.static(path.resolve('views', 'assets', 'js')));
+app.use('/js', express.static(path.resolve('views', 'assets', 'js')));
 app.use('/css', express.static(path.resolve('views', 'assets', 'css')));
 app.use('/mde', express.static(path.resolve('views', 'assets', 'simplemde', 'dist')));
 // main routes

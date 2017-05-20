@@ -1,8 +1,8 @@
 const swal = window.swal;
 const SimpleMDE = window.SimpleMDE;
-const jQuery = window.jQuery;
 const fetch = window.fetch;
 const Request = window.Request;
+const jQuery = window.jQuery;
 
 (function ($) {
   $(function () {
@@ -280,8 +280,8 @@ const Request = window.Request;
           });
         });
       });
-      $('#logout').click(window.location.href = '/login');
-      setInterval(function () {
+      $('#logout').click(() => { window.location.href = '/login'; });
+      setInterval(() => {
         var textarea = $('#editor-textarea');
         if (!textarea.attr('data-current')) return;
 
