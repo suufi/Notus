@@ -1,13 +1,21 @@
 {
-  "name": "notus",
+  "name": "not.us",
   "version": "1.5.7",
-  "description": "Taking notes, real quick.",
+  "description": "<h1 align=\"center\">Notus</h1>",
   "main": "Notus.js",
-  "keywords": ["notes", "api", "notus", "express", "rethinkdb", "rethink", "mongo"],
+  "keywords": [
+    "notes",
+    "api",
+    "notus",
+    "express",
+    "rethinkdb",
+    "rethink",
+    "mongo"
+  ],
   "homepage": "https://notus.cf",
-  "bugs": { 
-    "url" : "https://github.com/OnlyTwentyCharacters/Notus/issues",
-    "email" : "qxest@reqxest.com"
+  "bugs": {
+    "url": "https://github.com/OnlyTwentyCharacters/Notus/issues",
+    "email": "qxest@reqxest.com"
   },
   "dependencies": {
     "async": "^2.3.0",
@@ -38,7 +46,7 @@
     "semistandard": "*"
   },
   "semistandard": {
-  "ignore": [
+    "ignore": [
       "/views/assets/simplemde"
     ]
   },
@@ -48,5 +56,8 @@
   },
   "author": "OnlyTwentyCharacters",
   "license": "MIT",
-  "description": ""
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/OnlyTwentyCharacters/Notus.git"
+  }
 }
