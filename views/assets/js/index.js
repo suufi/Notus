@@ -49,7 +49,6 @@ const jQuery = window.jQuery;
               }).catch(console.error);
             });
           } else {
-            console.log('there shall be none');
             fetch(request).then(response => response.json()).then(response => {
               simplemde.value(response.content);
               $('#editor-textarea').attr('data-current', response.id);
@@ -219,67 +218,8 @@ const jQuery = window.jQuery;
             html: `Username: ${user.username} <br> Email: ${user.email}`,
             showCloseButton: true,
             showCancelButton: true,
-            confirmButtonText: 'Change Password',
             cancelButtonText: 'Close'
-          }).then(function () {
-            swal({
-              title: 'Enter your new password',
-              input: 'password',
-              inputAttributes: {
-                'maxlength': 10,
-                'autocapitalize': 'off',
-                'autocorrect': 'off'
-              }
-            }).then(function (password) {
-              if (password) {
-                swal({
-                  type: 'success',
-                  html: 'Entered password: ' + password
-                });
-              }
-            });
-            swal({
-              title: 'Change Password',
-              html:
-                '<input type="password" placeholder="Current password" id="current-password" class="swal2-input">' +
-                '<input type="password" placeholder="New password" id="new-password" class="swal2-input">' +
-                '<input type="password" placeholder="Confirm password" id="confirm-password" class="swal2-input">',
-              preConfirm: function () {
-                return new Promise(function (resolve) {
-                  resolve([
-                    $('#current-password').val(),
-                    $('#new-password').val(),
-                    $('#confirm-password').val()
-                  ]);
-                });
-              },
-              onOpen: function () {
-                $('#current-password').focus();
-              }
-            }).then(function (result) {
-              fetch('/me/password', {
-                method: 'post',
-                credentials: 'include',
-                headers: {
-                  'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({
-                  curPass: result[0],
-                  newPass: result[1],
-                  conPass: result[2]
-                })
-              })
-                .then(response => response.json()).then(response => {
-                  if (response.success) {
-                    swal('Password changed!', 'Signing you out.', 'success');
-                  } else {
-                    swal('Uh oh!', response.message, 'error');
-                  }
-                });
-            });
           });
-        });
-      });
       $('#logout').click(() => { window.location.href = '/login'; });
       setInterval(() => {
         var textarea = $('#editor-textarea');
