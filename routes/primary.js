@@ -27,18 +27,33 @@ router.get('/register', function (req, res) {
 });
 
 router.post('/register', function (req, res) {
-  if (!req.body.conPassword) return res.send({error: true, message: 'No confirmation password.'});
-  if (req.body.conPassword !== req.body.password) return res.send({error: true, message: 'Confirmation password incorrect.'});
+  if (!req.body.conPassword) {
+    return res.send({
+      error: true,
+      message: 'No confirmation password.'
+    });
+  }
+  if (req.body.conPassword !== req.body.password) {
+    return res.send({
+      error: true,
+      message: 'Confirmation password incorrect.'
+    });
+  }
 
   User.register(new User({
     username: req.body.username,
     email: req.body.email
   }), req.body.password, function (err) {
     if (err) {
-      return res.send({error: true, message: err.message});
+      return res.send({
+        error: true,
+        message: err.message
+      });
     }
 
-    res.send({success: true});
+    res.send({
+      success: true
+    });
   });
 });
 
@@ -59,7 +74,6 @@ router.get('/login', function (req, res) {
 router.post('/login', (req, res, next) => {
   passport.authenticate('local', function (error, user) {
     if (error) {
-      console.log('error', error);
       return res.send({
         error: true,
         message: error
@@ -132,6 +146,20 @@ router.post('/me/password', loggedIn, function (req, res) {
   });
 });
 
+router.get('/forgot', function (req, res, next) {
+  request('https://api.nasa.gov/planetary/apod?api_key=' + dataGovKey + '&hd=true', function (err, body) {
+    if (err) throw err;
+    res.render('pages/forgot', {
+      page: {
+        title: 'Forgot Password',
+        description: 'Forgot my password page @ Notus',
+        url: domains.base + '/forgot'
+      },
+      potd: JSON.parse(body.body)
+    });
+  });
+});
+
 router.post('/forgot', function (req, res, next) {
   async.waterfall([
     function (done) {
@@ -142,11 +170,15 @@ router.post('/forgot', function (req, res, next) {
       });
     },
     function (token, done) {
-      User.findOne({ email: req.body.email }, function (err, user) {
+      User.findOne({
+        email: req.body.email
+      }, function (err, user) {
         if (err) throw err;
         if (!user) {
-          req.send({error: true, message: 'No account with that email address exists.'});
-          return res.redirect('/forgot');
+          return req.send(JSON.stringify({
+            error: true,
+            message: 'No account with that email address exists.'
+          }));
         }
 
         user.resetPasswordToken = token;
@@ -171,7 +203,10 @@ router.post('/forgot', function (req, res, next) {
       };
       transporter.sendMail(mailOptions, function (err) {
         if (err) throw err;
-        req.send({success: true, message: 'An e-mail has been sent to ' + user.email + ' with further instructions.'});
+        return res.send({
+          success: true,
+          message: 'An e-mail has been sent to ' + user.email + ' with further instructions.'
+        });
       });
     }
   ], function (err) {
@@ -180,24 +215,67 @@ router.post('/forgot', function (req, res, next) {
   });
 });
 
-router.post('/reset/:token', function (req, res) {
+router.get('/reset/:token', function (req, res) {
+  User.findOne({
+    resetPasswordToken: req.params.token,
+    resetPasswordExpires: {
+      $gt: Date.now()
+    }
+  }, function (err, user) {
+    if (err) throw err;
+
+    if (!user) {
+      res.send('error', 'Password reset token is invalid or has expired.');
+      return res.redirect('/forgot');
+    }
+    request('https://api.nasa.gov/planetary/apod?api_key=' + dataGovKey + '&hd=true', function (err, body) {
+      if (err) throw err;
+      res.render('pages/reset', {
+        page: {
+          title: 'Reset Password',
+          description: 'Reset password page @ Notus',
+          url: domains.base + '/reset'
+        },
+        potd: JSON.parse(body.body),
+        user: req.user,
+        token: req.params.token
+      });
+    });
+  });
+});
+
+router.post('/reset', function (req, res) {
+  if (req.body.password !== req.body.confirmPassword) {
+    return res.send({
+      error: true,
+      message: 'Confirmation password is incorrect'
+    });
+  }
   async.waterfall([
     function (done) {
-      User.findOne({ resetPasswordToken: req.params.token, resetPasswordExpires: { $gt: Date.now() } }, function (err, user) {
+      User.findOne({
+        resetPasswordToken: req.body.token,
+        resetPasswordExpires: {
+          $gt: Date.now()
+        }
+      }, function (err, user) {
         if (err) throw err;
         if (!user) {
-          res.send({error: true, message: 'Password reset token is invalid or has expired.'});
-          return res.redirect('back');
+          return res.send({
+            error: true,
+            message: 'Password reset token is invalid or has expired.'
+          });
         }
 
-        user.password = req.body.password;
-        user.resetPasswordToken = undefined;
-        user.resetPasswordExpires = undefined;
+        user.setPassword(req.body.password, function () {
+          user.resetPasswordToken = undefined;
+          user.resetPasswordExpires = undefined;
 
-        user.save(function (err) {
-          if (err) throw err;
-          req.logIn(user, function (err) {
-            done(err, user);
+          user.save(function (err) {
+            if (err) throw err;
+            req.logIn(user, function (err) {
+              done(err, user);
+            });
           });
         });
       });
@@ -212,7 +290,10 @@ router.post('/reset/:token', function (req, res) {
           'This is a confirmation that the password for your account ' + user.email + ' has just been changed.\n'
       };
       smtpTransport.sendMail(mailOptions, function (err) {
-        res.send({success: true, message: 'Success! Your password has been changed.'});
+        res.send({
+          success: true,
+          message: 'Success! Your password has been changed.'
+        });
         done(err);
       });
     }
