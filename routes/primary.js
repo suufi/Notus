@@ -1,4 +1,4 @@
-const { rethinkdb, mailService, domains, dataGovKey } = require('./../config');
+const { rethinkdb, mailService, domains, dataGovKey, noteLimit } = require('./../config');
 const r = require('rethinkdbdash')(rethinkdb);
 const User = require('./../models/user');
 const passport = require('passport');
@@ -26,7 +26,7 @@ router.get('/register', function (req, res) {
   });
 });
 
-router.post('/register', function (req, res) {
+router.post('/register', function (req, res, next) {
   if (!req.body.conPassword) {
     return res.send({
       error: true,
@@ -40,21 +40,54 @@ router.post('/register', function (req, res) {
     });
   }
 
-  User.register(new User({
-    username: req.body.username,
-    email: req.body.email
-  }), req.body.password, function (err) {
-    if (err) {
-      return res.send({
-        error: true,
-        message: err.message
+    async.waterfall([
+      function (done) {
+        crypto.randomBytes(20, function (err, buf) {
+          if (err) throw err;
+          var token = buf.toString('hex');
+          done(err, token);
+        });
+      },
+      function (token, user) {
+        let transporter = nodemailer.createTransport(mailService);
+        var mailOptions = {
+          to: req.body.email,
+          from: 'no-reply@' + domains.mail,
+          subject: '[Notus] Verification',
+          text: 'You are receiving this because you (or someone else) has used your email to register on our site.\n\n' +
+            'Please click on the following link, or paste this into your browser to complete the process:\n\n' +
+            'https://' + req.headers.host + '/verify/' + token + '\n\n' +
+            'If you did not register on our site, you can safely ignore this message. \n'
+        };
+        transporter.sendMail(mailOptions, function (err) {
+          if (err) throw err;
+          return res.send({
+            success: true,
+            message: 'An e-mail has been sent to ' + req.body.email + ' with further instructions.'
+          });
+        });
+        User.register(new User({
+          username: req.body.username,
+          email: req.body.email,
+          verificationToken: token,
+          verified: false
+        }), req.body.password, function (err) {
+          if (err) {
+            return res.send({
+              error: true,
+              message: err.message
+            });
+          }
+        });
+      }
+    ], function (err) {
+      if (err) return next(err);
+      res.send({
+        success: true
       });
-    }
-
-    res.send({
-      success: true
+      
     });
-  });
+ 
 });
 
 router.get('/login', function (req, res) {
@@ -71,7 +104,7 @@ router.get('/login', function (req, res) {
   });
 });
 
-router.post('/login', (req, res, next) => {
+router.post('/login', function (req, res, next) {
   passport.authenticate('local', function (error, user) {
     if (error) {
       return res.send({
@@ -143,6 +176,51 @@ router.post('/me/password', loggedIn, function (req, res) {
         success: true
       });
     });
+  });
+});
+
+router.get('/verify/:token', function (req, res, next) {
+  async.waterfall([
+    function (done) {
+      User.findOne({
+        verified: false,
+        verificationToken: req.params.token
+      }, function (err, user) {
+        if (err) throw err;
+        if (!user) {
+          return res.send({
+            error: true,
+            message: 'Unable to verify you.'
+          });
+        }
+
+        user.verified = true;
+        user.verificationToken = undefined;
+
+        user.save(function (err) {
+          if (err) throw err;
+          req.logIn(user, function (err) {
+            done(err, user);
+          });
+        });
+      });
+    },
+    function (user, done) {
+      var smtpTransport = nodemailer.createTransport(mailService);
+      var mailOptions = {
+        to: user.email,
+        from: 'no-reply@' + domains.mail,
+        subject: '[Notus] Verified',
+        text: 'Hello,\n\n' +
+          'This is a confirmation that you verified yourself on Notus. \n Thank you. \n'
+      };
+      smtpTransport.sendMail(mailOptions, function (err) {
+        res.redirect('/notes');
+        done(err);
+      });
+    }
+  ], function () {
+    res.redirect('/');
   });
 });
 
