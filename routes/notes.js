@@ -35,10 +35,10 @@ router.post('/', loggedIn, (req, res) => {
         description: req.body.description,
         userId: req.user.id,
         content: ''
-      }).then(res.sendStatus(200));
+      }).then(res.send({success: true}));
     });
   } else {
-    res.sendStatus(405);
+    res.send({success: true});
   }
 });
 
