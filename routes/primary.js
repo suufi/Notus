@@ -1,6 +1,3 @@
-/* eslint no-undef: "error" */
-/* eslint-env node */
-
 const { rethinkdb, mailService, domains, dataGovKey } = require('./../config');
 const r = require('rethinkdbdash')(rethinkdb);
 const User = require('./../models/user');
@@ -238,7 +235,7 @@ router.get('/partials/sidebar', loggedIn, (req, res) => {
 
 function loggedIn (req, res, next) {
   if (req.user) {
-    next();
+    return next();
   }
   res.redirect('/login');
 }

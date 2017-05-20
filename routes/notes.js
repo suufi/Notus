@@ -10,7 +10,7 @@ router.get('/', loggedIn, (req, res) => {
     r.table('notus_notes').getAll(req.user.id, {
       index: 'userId'
     }).then(notes => {
-      res.render('pages/index', {
+      return res.render('pages/index', {
         page: {
           title: 'Notes',
           description: 'Notes page @ Notus',
@@ -91,7 +91,7 @@ router.delete('/:note', loggedIn, (req, res) => {
 
 function loggedIn (req, res, next) {
   if (req.user) {
-    next();
+    return next();
   }
   res.redirect('/login');
 }
